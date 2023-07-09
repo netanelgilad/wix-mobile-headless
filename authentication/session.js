@@ -6,8 +6,8 @@ import "react-native-url-polyfill/auto";
 
 /**
  * @type {React.Context<{
- *  session: import("@wix/api-client").Tokens,
- * setSession: (session: import("@wix/api-client").Tokens) => Promise<void>,
+ *  session: import("@wix/sdk-react").Tokens,
+ * setSession: (session: import("@wix/sdk-react").Tokens) => Promise<void>,
  * newVisitorSession: () => Promise<void> }>}
  */
 const WixSessionContext = React.createContext(null);

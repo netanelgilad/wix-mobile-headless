@@ -5,7 +5,7 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import { OAuthStrategy } from "@wix/api-client";
+import { OAuthStrategy } from "@wix/sdk-react";
 import { members } from "@wix/members";
 import { WixProvider } from "@wix/sdk-react";
 import * as React from "react";
