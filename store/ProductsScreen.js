@@ -2,8 +2,8 @@ import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useWixModules } from "@wix/sdk-react";
 import { products } from "@wix/stores";
-import { ScrollView, Text } from "react-native";
-import { List } from "react-native-paper";
+import { ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, List } from "react-native-paper";
 import { WixMediaImage } from "../WixMediaImage";
 
 export function ProductsScreen({ navigation }) {
@@ -12,7 +12,11 @@ export function ProductsScreen({ navigation }) {
   const productsResponse = useQuery(["products"], () => queryProducts().find());
 
   if (productsResponse.isLoading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
   if (productsResponse.isError) {
