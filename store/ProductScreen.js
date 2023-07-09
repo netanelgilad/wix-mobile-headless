@@ -24,6 +24,7 @@ import { usePrice } from "./price";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useWixSessionModules } from "../authentication/session";
 import { currentCart } from "@wix/ecom";
+import { WixMediaImage } from "../WixMediaImage";
 
 export function ProductScreen({ route, navigation }) {
   const { product } = route.params;
@@ -69,11 +70,6 @@ export function ProductScreen({ route, navigation }) {
     },
     {
       onSuccess: (redirectSession) => {
-        Linking.addEventListener("url", ({ url }) => {
-          console.log(url);
-          navigation.navigate("Products");
-        });
-
         navigation.navigate("Checkout", { redirectSession });
       },
     }
@@ -113,7 +109,9 @@ export function ProductScreen({ route, navigation }) {
       contentContainerStyle={styles.content}
     >
       <Card style={styles.card} mode={"elevated"}>
-        <Card.Cover source={{ uri: product.media.mainMedia.image.url }} />
+        <WixMediaImage media={product.media.mainMedia.image.url}>
+          {({ url }) => <Card.Cover source={{ uri: url }} />}
+        </WixMediaImage>
         <Card.Title title={product.name} subtitle={price} />
         <Card.Content>
           <Text variant="bodyMedium">{product.description}</Text>
@@ -129,6 +127,7 @@ export function ProductScreen({ route, navigation }) {
             mode="contained"
             onPress={() => addToCurrentCartMutation.mutateAsync(quantity)}
             loading={addToCurrentCartMutation.isLoading}
+            disabled={addToCurrentCartMutation.isLoading}
             style={styles.flexGrow1Button}
             buttonColor={theme.colors.secondary}
           >
@@ -138,6 +137,7 @@ export function ProductScreen({ route, navigation }) {
             mode="contained"
             style={styles.flexGrow1Button}
             loading={buyNowMutation.isLoading}
+            disabled={buyNowMutation.isLoading}
             onPress={() => buyNowMutation.mutateAsync(quantity)}
           >
             Buy Now

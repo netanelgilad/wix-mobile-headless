@@ -3,7 +3,7 @@ import * as React from "react";
 import { ProductsScreen } from "./ProductsScreen";
 import { ProductScreen } from "./ProductScreen";
 import { CheckoutScreen } from "./CheckoutScreen";
-import { OrderSummaryScreen } from "./OrderSummaryScreen";
+import { CheckoutThankYouScreen } from "./CheckoutThankYouScreen";
 import { CartScreen } from "./CartScreen";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,11 @@ export function StoreScreen() {
         component={ProductScreen}
         options={({ route }) => ({ title: route.params.product.name })}
       />
-      <Stack.Screen name="OrderSummary" component={OrderSummaryScreen} />
+      <Stack.Screen
+        name="CheckoutThankYou"
+        component={CheckoutThankYouScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Cart" component={CartScreen} />
     </Stack.Navigator>
   );

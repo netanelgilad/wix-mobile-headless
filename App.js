@@ -24,6 +24,7 @@ import {
   WixSessionProvider,
 } from "./authentication/session";
 import { StoreScreen } from "./store/StoreScreen";
+import * as Linking from "expo-linking";
 
 const Drawer = createDrawerNavigator();
 
@@ -94,7 +95,20 @@ function App() {
           })}
         >
           <WixSessionProvider>
-            <NavigationContainer>
+            <NavigationContainer
+              linking={{
+                prefixes: [Linking.createURL("/")],
+                config: {
+                  screens: {
+                    Store: {
+                      screens: {
+                        CheckoutThankYou: "checkout/thank-you",
+                      },
+                    },
+                  },
+                },
+              }}
+            >
               <Drawer.Navigator
                 screenOptions={({ navigation, route }) => ({
                   headerRight: () => (

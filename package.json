@@ -11,7 +11,7 @@
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native-stack": "^6.9.13",
     "@tanstack/react-query": "^4.29.19",
-    "@wix/api-client": "^1.2.0",
+    "@wix/api-client": "^1.2.2",
     "@wix/ecom": "^1.0.248",
     "@wix/members": "^1.0.15",
     "@wix/redirects": "^1.0.19",
