@@ -62,7 +62,9 @@ export function ProductScreen({ route, navigation }) {
       const { redirectSession } = await createRedirectSession({
         ecomCheckout: { checkoutId: currentCheckout._id },
         callbacks: {
-          thankYouPageUrl: Linking.createURL("/checkout/thank-you"),
+          thankYouPageUrl: Linking.createURL("/store/checkout/thank-you"),
+          cartPageUrl: Linking.createURL("/store/cart"),
+          postFlowUrl: Linking.createURL("/store/products"),
         },
       });
 

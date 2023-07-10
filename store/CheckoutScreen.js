@@ -5,5 +5,11 @@ export function CheckoutScreen({ route }) {
   const { redirectSession } = route.params;
   const webviewRef = React.useRef(null);
 
-  return <WebView ref={webviewRef} source={{ uri: redirectSession.fullUrl }} />;
+  return (
+    <WebView
+      setSupportMultipleWindows={false}
+      ref={webviewRef}
+      source={{ uri: redirectSession.fullUrl }}
+    />
+  );
 }

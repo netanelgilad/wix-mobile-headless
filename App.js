@@ -101,8 +101,11 @@ function App() {
                 config: {
                   screens: {
                     Store: {
+                      path: "store",
                       screens: {
                         CheckoutThankYou: "checkout/thank-you",
+                        Cart: "cart",
+                        Products: "products",
                       },
                     },
                   },
