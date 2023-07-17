@@ -4,17 +4,10 @@ import { View } from "react-native";
 import { orders } from "@wix/ecom";
 import { useWixSessionModules } from "../authentication/session";
 import { useQuery } from "@tanstack/react-query";
+import { usePreventBackNavigation } from "../utils/usePreventBackNavigation";
 
 export function CheckoutThankYouScreen({ route, navigation }) {
-  React.useEffect(
-    () =>
-      navigation.addListener("beforeRemove", (e) => {
-        if (e.data.action.type === "GO_BACK") {
-          e.preventDefault();
-        }
-      }),
-    [navigation]
-  );
+  usePreventBackNavigation({ navigation });
 
   const { getOrder } = useWixSessionModules(orders);
   const orderQuery = useQuery(["order", route.params.orderId], () =>
