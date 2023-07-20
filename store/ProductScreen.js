@@ -1,6 +1,5 @@
 import { checkout } from "@wix/ecom";
 import { redirects } from "@wix/redirects";
-import { useWixModules } from "@wix/sdk-react";
 import * as Linking from "expo-linking";
 import * as React from "react";
 import {
@@ -37,7 +36,7 @@ export function ProductScreen({ route, navigation }) {
   const {
     redirects: { createRedirectSession },
     checkout: { createCheckout },
-  } = useWixModules({ redirects, checkout });
+  } = useWixSessionModules({ redirects, checkout });
 
   const price = usePrice({
     amount: product.price.price,
