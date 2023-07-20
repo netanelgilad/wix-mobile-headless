@@ -1,5 +1,7 @@
 # Wix Headless - react-native Example
 
+> Join the [Wix Headless community on Discord](https://discord.com/channels/773211030314418196/1090595348067655813) to get official support, interact with fellow Wix Headless developers and get updates on new releases.
+
 This is an example mobile app using Wix Headless and Wix's business solutions APIs. It showcases the ability to build a secure and flexible native application using react-native.
 
 ## Features
@@ -44,4 +46,6 @@ These are the currently planned features and guides for this example application
   - [ ] Finding available slots
   - [ ] Book service 
   - [ ] My Bookings screen
+
+Join in the conversation in our [discord channel](https://discord.com/channels/773211030314418196/1090595348067655813) to provide feedback, ask questions and request more features for the example application.
   
