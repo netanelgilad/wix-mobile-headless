@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useWixModules } from "@wix/sdk-react";
+import { useWixSessionModules } from "../authentication/session";
 import { products } from "@wix/stores";
 import { ScrollView, Text, View } from "react-native";
 import { ActivityIndicator, List } from "react-native-paper";
 import { WixMediaImage } from "../WixMediaImage";
 
 export function ProductsScreen({ navigation }) {
-  const { queryProducts } = useWixModules(products);
+  const { queryProducts } = useWixSessionModules(products);
 
   const productsResponse = useQuery(["products"], () => queryProducts().find());
 

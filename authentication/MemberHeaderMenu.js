@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { members } from "@wix/members";
-import { useWixModules } from "@wix/sdk-react";
 import { TouchableHighlight } from "react-native";
 import {
   ActivityIndicator,
@@ -10,10 +9,11 @@ import {
   Menu,
   Button,
 } from "react-native-paper";
-import { useWixSession } from "./session";
+import { useWixSession, useWixSessionModules } from "./session";
 import { useWixAuth } from "@wix/sdk-react";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
+import * as SecureStorage from "expo-secure-store";
 
 export function MemberHeaderMenu({ navigation }) {
   const { session } = useWixSession();
@@ -26,7 +26,7 @@ export function MemberHeaderMenu({ navigation }) {
 }
 
 function SignInButton() {
-  const { setSession } = useWixSession();
+  const { sessionLoading } = useWixSession();
   const auth = useWixAuth();
 
   const authSessionMutation = useMutation(
@@ -36,26 +36,13 @@ function SignInButton() {
         "stam"
       );
 
+      await SecureStorage.setItemAsync("oauthState", JSON.stringify(data));
+
       const { authUrl } = await auth.getAuthUrl(data);
-      return { authUrl, data };
+      return authUrl;
     },
     {
-      onSuccess: async ({ authUrl, data }) => {
-        const subscription = Linking.addEventListener("url", async (event) => {
-          // need to use parseFromUrl but it should get the url from the event
-          // then we can polyfill the URLSearchParams and the URL class
-          const theURL = new URL(event.url);
-          const params = new URLSearchParams(theURL.hash.substring(1));
-          const tokens = await auth.getMemberTokens(
-            params.get("code"),
-            params.get("state"),
-            data
-          );
-          setSession(tokens);
-
-          subscription.remove();
-        });
-
+      onSuccess: async (authUrl) => {
         WebBrowser.openBrowserAsync(authUrl, {});
       },
     }
@@ -65,8 +52,8 @@ function SignInButton() {
     <Button
       mode="elevated"
       icon={"login"}
-      loading={authSessionMutation.isLoading}
-      disabled={authSessionMutation.isLoading}
+      loading={authSessionMutation.isLoading || sessionLoading}
+      disabled={authSessionMutation.isLoading || sessionLoading}
       onPress={async () => authSessionMutation.mutate()}
     >
       Login
@@ -76,11 +63,11 @@ function SignInButton() {
 
 function MemberMenu({ navigation }) {
   const { newVisitorSession } = useWixSession();
-  const { getMyMember } = useWixModules(members);
+  const { getMyMember } = useWixSessionModules(members);
   const memberQuery = useQuery(["myMember"], () => getMyMember());
   const [visible, setVisible] = React.useState(false);
 
-  if (memberQuery.isLoading) {
+  if (memberQuery.isFetching) {
     return <ActivityIndicator animating={true} />;
   }
 
