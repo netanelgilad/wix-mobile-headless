@@ -14,10 +14,12 @@ import { Text, ScrollView, View, RefreshControl } from "react-native";
 import { WixMediaImage } from "../WixMediaImage";
 import NumericInput from "react-native-numeric-input";
 import { usePrice } from "./price";
+import { redirects } from "@wix/redirects";
 
 export function CartScreen({ navigation }) {
   const { getCurrentCart, createCheckoutFromCurrentCart } =
     useWixSessionModules(currentCart);
+  const { createRedirectSession } = useWixSessionModules(redirects);
   const currentCartQuery = useQuery(["currentCart"], getCurrentCart);
 
   const checkoutMutation = useMutation(
