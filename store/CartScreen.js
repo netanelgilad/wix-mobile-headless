@@ -15,10 +15,11 @@ import { WixMediaImage } from "../WixMediaImage";
 import NumericInput from "react-native-numeric-input";
 import { usePrice } from "./price";
 import { redirects } from "@wix/redirects";
+import { useWixModules } from "@wix/sdk-react";
 
 export function CartScreen({ navigation }) {
   const { getCurrentCart, createCheckoutFromCurrentCart } =
-    useWixSessionModules(currentCart);
+    useWixModules(currentCart);
   const { createRedirectSession } = useWixSessionModules(redirects);
   const currentCartQuery = useQuery(["currentCart"], getCurrentCart);
 
@@ -29,7 +30,7 @@ export function CartScreen({ navigation }) {
       });
 
       const { redirectSession } = await createRedirectSession({
-        ecomCheckout: { checkoutId: currentCheckout._id },
+        ecomCheckout: { checkoutId: currentCheckout.checkoutId },
         callbacks: {
           thankYouPageUrl: Linking.createURL("/checkout/thank-you"),
         },
