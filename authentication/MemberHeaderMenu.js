@@ -92,8 +92,12 @@ function MemberMenu({ navigation }) {
         </TouchableHighlight>
       }
     >
-      <Menu.Item onPress={() => {}} title="Item 1" />
-      <Menu.Item onPress={() => {}} title="Item 2" />
+      <Menu.Item
+        onPress={() => {
+          navigation.navigate("MyOrders");
+        }}
+        title="My Orders"
+      />
       <Divider />
       <Menu.Item
         onPress={async () => {

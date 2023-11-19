@@ -25,6 +25,7 @@ import {
 } from "./authentication/session";
 import { StoreScreen } from "./store/StoreScreen";
 import * as Linking from "expo-linking";
+import { MyOrdersScreen } from "./store/MyOrdersScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -145,6 +146,14 @@ function App() {
                   component={StoreScreen}
                   options={{
                     headerTitle: () => <Text>Store</Text>,
+                  }}
+                />
+                <Drawer.Screen
+                  name="MyOrders"
+                  component={MyOrdersScreen}
+                  options={{
+                    drawerItemStyle: { display: "none" },
+                    headerTitle: () => <Text>My Orders</Text>,
                   }}
                 />
                 <Drawer.Screen name="Details" component={DetailsScreen} />
