@@ -16,6 +16,7 @@ import NumericInput from "react-native-numeric-input";
 import { usePrice } from "./price";
 import { redirects } from "@wix/redirects";
 import { useWixModules } from "@wix/sdk-react";
+import * as Linking from "expo-linking";
 
 export function CartScreen({ navigation }) {
   const { getCurrentCart, createCheckoutFromCurrentCart } =
@@ -40,11 +41,6 @@ export function CartScreen({ navigation }) {
     },
     {
       onSuccess: (redirectSession) => {
-        Linking.addEventListener("url", ({ url }) => {
-          console.log(url);
-          navigation.navigate("Products");
-        });
-
         navigation.navigate("Checkout", { redirectSession });
       },
     }

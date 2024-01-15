@@ -63,8 +63,8 @@ function SignInButton() {
 
 function MemberMenu({ navigation }) {
   const { newVisitorSession } = useWixSession();
-  const { getMyMember } = useWixSessionModules(members);
-  const memberQuery = useQuery(["myMember"], () => getMyMember());
+  const { getCurrentMember } = useWixSessionModules(members);
+  const memberQuery = useQuery(["myMember"], () => getCurrentMember());
   const [visible, setVisible] = React.useState(false);
 
   if (memberQuery.isFetching) {

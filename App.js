@@ -5,34 +5,33 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import { OAuthStrategy } from "@wix/sdk-react";
 import { members } from "@wix/members";
-import { WixProvider } from "@wix/sdk-react";
+import { OAuthStrategy, WixProvider } from "@wix/sdk-react";
+import * as Linking from "expo-linking";
 import * as React from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import "react-native-gesture-handler";
 import {
   ActivityIndicator,
-  PaperProvider,
   IconButton,
+  PaperProvider,
 } from "react-native-paper";
 import "react-native-url-polyfill/auto";
 import { MemberHeaderMenu } from "./authentication/MemberHeaderMenu";
 import {
-  useWixSessionModules,
-  useWixSession,
   WixSessionProvider,
+  useWixSession,
+  useWixSessionModules,
 } from "./authentication/session";
-import { StoreScreen } from "./store/StoreScreen";
-import * as Linking from "expo-linking";
 import { MyOrdersScreen } from "./store/MyOrdersScreen";
+import { StoreScreen } from "./store/StoreScreen";
 
 const Drawer = createDrawerNavigator();
 
 function MemberNickname() {
-  const { getMyMember } = useWixSessionModules(members);
+  const { getCurrentMember } = useWixSessionModules(members);
 
-  const memberDetails = useQuery(["memberDetails"], getMyMember);
+  const memberDetails = useQuery(["memberDetails"], getCurrentMember);
 
   if (memberDetails.isLoading) {
     return <ActivityIndicator />;
@@ -58,28 +57,6 @@ function HomeScreen({ navigation }) {
           "Anonymous"
         )}
       </Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
-      />
-    </View>
-  );
-}
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() => navigation.push("Details")}
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="Go back to first screen in stack"
-        onPress={() => navigation.popToTop()}
-      />
     </View>
   );
 }
@@ -156,7 +133,6 @@ function App() {
                     headerTitle: () => <Text>My Orders</Text>,
                   }}
                 />
-                <Drawer.Screen name="Details" component={DetailsScreen} />
               </Drawer.Navigator>
             </NavigationContainer>
           </WixSessionProvider>
